@@ -24,20 +24,21 @@ class ControlScreen extends StatelessWidget {
             const EdgeInsets.all(16),
         child: Column(
           children: [
-
             Card(
               child: SwitchListTile(
                 title: const Text(
                   'Bomba de Água',
                 ),
                 subtitle: Text(
-                  control.pumpOn
+                  control.dashboard.pumpOn
                       ? 'Ligada'
                       : 'Desligada',
                 ),
-                value: control.pumpOn,
+                value:
+                    control.dashboard.pumpOn,
                 onChanged: (_) async {
-                  await control.togglePump();
+                  await control
+                      .togglePump();
                 },
               ),
             ),
@@ -62,7 +63,8 @@ class ControlScreen extends StatelessWidget {
                                 await control
                                     .quickRead();
 
-                            if (!context.mounted) {
+                            if (!context
+                                .mounted) {
                               return;
                             }
 
@@ -98,7 +100,8 @@ class ControlScreen extends StatelessWidget {
                             await control
                                 .disableSystem();
 
-                            if (!context.mounted) {
+                            if (!context
+                                .mounted) {
                               return;
                             }
 

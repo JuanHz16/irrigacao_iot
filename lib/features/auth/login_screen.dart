@@ -3,7 +3,6 @@ import 'package:irrigacao_iot/features/navigation/main_navigation_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_provider.dart';
-import '../dashboard/dashboard_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {

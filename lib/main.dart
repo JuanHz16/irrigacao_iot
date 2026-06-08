@@ -14,7 +14,12 @@ void main() {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
 
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
-        ChangeNotifierProvider(create: (_) => ControlProvider()),
+        ChangeNotifierProxyProvider<DashboardProvider, ControlProvider>(
+          create: (context) =>
+              ControlProvider(context.read<DashboardProvider>()),
+          update: (context, dashboard, previous) =>
+              previous ?? ControlProvider(dashboard),
+        ),
       ],
       child: const MyApp(),
     ),

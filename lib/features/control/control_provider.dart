@@ -3,8 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../core/database/database_helper.dart';
+import '../dashboard/dashboard_provider.dart';
 
 class ControlProvider extends ChangeNotifier {
+  final DashboardProvider dashboardProvider;
+  DashboardProvider get dashboard =>
+    dashboardProvider;
+
+  ControlProvider(this.dashboardProvider);
+
   final DatabaseHelper _database =
       DatabaseHelper.instance;
 
@@ -26,6 +33,10 @@ class ControlProvider extends ChangeNotifier {
       _setLoading(true);
 
       pumpOn = !pumpOn;
+
+      dashboardProvider.setPumpStatus(
+        pumpOn,
+      );
 
       notifyListeners();
 
@@ -77,6 +88,10 @@ class ControlProvider extends ChangeNotifier {
         },
       );
 
+      dashboardProvider.addReading(
+        moisture,
+      );
+
       return moisture;
     } catch (e) {
       debugPrint(
@@ -96,6 +111,14 @@ class ControlProvider extends ChangeNotifier {
       sensorEnabled = false;
 
       pumpOn = false;
+
+      dashboardProvider.setPumpStatus(
+        false,
+      );
+
+      dashboardProvider.setSensorStatus(
+        false,
+      );
 
       notifyListeners();
     } catch (e) {
