@@ -81,6 +81,25 @@ class DatabaseHelper {
 
     return null;
   }
+  Future<Map<String, dynamic>?> loginUser(
+  String email,
+  String password,
+) async {
+  final db = await database;
+
+  final result = await db.query(
+    'users',
+    where: 'email = ? AND password = ?',
+    whereArgs: [email, password],
+    limit: 1,
+  );
+
+  if (result.isNotEmpty) {
+    return result.first;
+  }
+
+  return null;
+}
 
   // ======================
   // DEVICES
@@ -338,3 +357,4 @@ class DatabaseHelper {
     return (result.first['total'] as int?) ?? 0;
   }
 }
+

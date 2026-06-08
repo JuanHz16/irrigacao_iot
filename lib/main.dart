@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'core/database/database_helper.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
 
-  try {
-    final db = DatabaseHelper.instance;
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-    await db.database;
+import 'features/auth/auth_provider.dart';
+import 'features/auth/login_screen.dart';
 
-    print('✅ Banco criado com sucesso!');
-  } catch (e) {
-    print('❌ Erro ao criar banco: $e');
-  }
-
-  runApp(const MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,12 +26,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Teste'),
-        ),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Irrigação IoT',
+      home: const LoginScreen(),
     );
   }
 }
