@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../config/config_screen.dart';
-
+import '../setup/setup_screen.dart';
 import '../control/control_screen.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../history/history_screen.dart';
@@ -20,6 +20,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const ControlScreen(),
     const ConfigScreen(),
     const HistoryScreen(),
+    const SetupScreen(),
   ];
 
   @override
@@ -59,6 +60,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             icon: Icon(Icons.history),
             label: 'Histórico',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.router), label: 'Setup'),
         ],
       ),
     );
