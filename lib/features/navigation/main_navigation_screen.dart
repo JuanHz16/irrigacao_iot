@@ -4,6 +4,7 @@ import '../setup/setup_screen.dart';
 import '../control/control_screen.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../history/history_screen.dart';
+import '../reports/reports_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -21,6 +22,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const ConfigScreen(),
     const HistoryScreen(),
     const SetupScreen(),
+    const ReportsScreen(),
   ];
 
   @override
@@ -61,6 +63,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             label: 'Histórico',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.router), label: 'Setup'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Relatórios',
+          ),
         ],
       ),
     );
