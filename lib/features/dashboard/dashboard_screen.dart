@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../shared/widgets/pump_status_card.dart';
 import '../../shared/widgets/moisture_gauge.dart';
+import '../../shared/widgets/pump_status_card.dart';
 import 'dashboard_provider.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() =>
+      _DashboardScreenState();
+}
+
+class _DashboardScreenState
+    extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) {
+      context
+          .read<DashboardProvider>()
+          .loadDashboardData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +107,16 @@ class DashboardScreen extends StatelessWidget {
 
             const SizedBox(height: 10),
 
+            if (dashboard.lastReadings
+                .isEmpty)
+              const Card(
+                child: ListTile(
+                  title: Text(
+                    'Nenhuma leitura encontrada',
+                  ),
+                ),
+              ),
+
             ...dashboard.lastReadings.map(
               (reading) => Card(
                 child: ListTile(
@@ -95,7 +124,7 @@ class DashboardScreen extends StatelessWidget {
                     Icons.water_drop,
                   ),
                   title: Text(
-                    '$reading%',
+                    '${reading.toStringAsFixed(1)}%',
                   ),
                 ),
               ),
