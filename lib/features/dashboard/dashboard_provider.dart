@@ -43,5 +43,29 @@ class DashboardProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+  void setPumpStatus(bool value) {
+  pumpOn = value;
+  notifyListeners();
+}
+
+void setSensorStatus(bool value) {
+  sensorActive = value;
+  notifyListeners();
+}
+
+void addReading(double value) {
+  moistureValue = value;
+
+  lastReadings.insert(
+    0,
+    value,
+  );
+
+  if (lastReadings.length > 5) {
+    lastReadings.removeLast();
+  }
+
+  notifyListeners();
+}
 }
 
