@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'core/database/database_helper.dart';
+import 'features/control/control_provider.dart';
 
-
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'features/auth/auth_provider.dart';
@@ -13,13 +11,10 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
 
-        ChangeNotifierProvider(
-          create: (_) => DashboardProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
+        ChangeNotifierProvider(create: (_) => ControlProvider()),
       ],
       child: const MyApp(),
     ),
