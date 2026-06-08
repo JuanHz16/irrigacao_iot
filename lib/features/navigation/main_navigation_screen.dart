@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
+import '../config/config_screen.dart';
 
 import '../control/control_screen.dart';
 import '../dashboard/dashboard_screen.dart';
 
-class MainNavigationScreen
-    extends StatefulWidget {
-  const MainNavigationScreen({
-    super.key,
-  });
+class MainNavigationScreen extends StatefulWidget {
+  const MainNavigationScreen({super.key});
 
   @override
-  State<MainNavigationScreen>
-      createState() =>
-          _MainNavigationScreenState();
+  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
-class _MainNavigationScreenState
-    extends State<MainNavigationScreen> {
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int currentIndex = 0;
 
   final List<Widget> screens = [
     const DashboardScreen(),
     const ControlScreen(),
+    const ConfigScreen(),
   ];
 
   @override
@@ -29,8 +25,7 @@ class _MainNavigationScreenState
     return Scaffold(
       body: screens[currentIndex],
 
-      bottomNavigationBar:
-          BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
 
         onTap: (index) {
@@ -41,18 +36,16 @@ class _MainNavigationScreenState
 
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.dashboard,
-            ),
+            icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings_remote,
-            ),
+            icon: Icon(Icons.settings_remote),
             label: 'Controle',
           ),
+
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Config'),
         ],
       ),
     );
