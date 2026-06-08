@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'features/control/control_provider.dart';
 import 'features/config/config_provider.dart';
-
+import 'features/setup/setup_provider.dart';
 import 'package:provider/provider.dart';
 import 'features/history/history_provider.dart';
 import 'features/auth/auth_provider.dart';
@@ -15,7 +15,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ConfigProvider()),
         ChangeNotifierProvider(create: (_) => HistoryProvider()),
-
+        ChangeNotifierProvider(create: (_) => SetupProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProxyProvider<DashboardProvider, ControlProvider>(
           create: (context) =>
