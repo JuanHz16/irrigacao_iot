@@ -19,27 +19,131 @@ class ControlScreen extends StatelessWidget {
           'Controle',
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding:
+            const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
           children: [
-            Text(
-              control.pumpOn
-                  ? 'Bomba Ligada'
-                  : 'Bomba Desligada',
+
+            Card(
+              child: SwitchListTile(
+                title: const Text(
+                  'Bomba de Água',
+                ),
+                subtitle: Text(
+                  control.pumpOn
+                      ? 'Ligada'
+                      : 'Desligada',
+                ),
+                value: control.pumpOn,
+                onChanged: (_) async {
+                  await control.togglePump();
+                },
+              ),
             ),
 
             const SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: () {
-                control.togglePump();
-              },
-              child: const Text(
-                'Alternar Bomba',
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton.icon(
+                icon: const Icon(
+                  Icons.water_drop,
+                ),
+                label: const Text(
+                  'Leitura Rápida',
+                ),
+                onPressed:
+                    control.isLoading
+                        ? null
+                        : () async {
+                            final moisture =
+                                await control
+                                    .quickRead();
+
+                            if (!context.mounted) {
+                              return;
+                            }
+
+                            ScaffoldMessenger.of(
+                                    context)
+                                .showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Umidade: ${moisture.toStringAsFixed(1)}%',
+                                ),
+                              ),
+                            );
+                          },
               ),
             ),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton.icon(
+                icon: const Icon(
+                  Icons.power_off,
+                ),
+                label: const Text(
+                  'Desligar Sistema',
+                ),
+                onPressed:
+                    control.isLoading
+                        ? null
+                        : () async {
+                            await control
+                                .disableSystem();
+
+                            if (!context.mounted) {
+                              return;
+                            }
+
+                            ScaffoldMessenger.of(
+                                    context)
+                                .showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Sistema desligado',
+                                ),
+                              ),
+                            );
+                          },
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            Card(
+              child: ListTile(
+                leading: Icon(
+                  control.sensorEnabled
+                      ? Icons.sensors
+                      : Icons.sensors_off,
+                ),
+                title: const Text(
+                  'Sensor',
+                ),
+                subtitle: Text(
+                  control.sensorEnabled
+                      ? 'Ativo'
+                      : 'Desativado',
+                ),
+              ),
+            ),
+
+            if (control.isLoading)
+              const Padding(
+                padding:
+                    EdgeInsets.only(
+                  top: 20,
+                ),
+                child:
+                    CircularProgressIndicator(),
+              ),
           ],
         ),
       ),
