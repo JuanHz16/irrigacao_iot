@@ -21,22 +21,12 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(
-      await getDatabasesPath(),
-      'irrigacao_iot.db',
-    );
+    String path = join(await getDatabasesPath(), 'irrigacao_iot.db');
 
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
-  Future<void> _onCreate(
-    Database db,
-    int version,
-  ) async {
+  Future<void> _onCreate(Database db, int version) async {
     await db.execute(Tables.users);
 
     await db.execute(Tables.devices);
@@ -52,20 +42,13 @@ class DatabaseHelper {
   // USERS
   // ======================
 
-  Future<int> insertUser(
-    Map<String, dynamic> user,
-  ) async {
+  Future<int> insertUser(Map<String, dynamic> user) async {
     final db = await database;
 
-    return await db.insert(
-      'users',
-      user,
-    );
+    return await db.insert('users', user);
   }
 
-  Future<Map<String, dynamic>?> getUserByEmail(
-    String email,
-  ) async {
+  Future<Map<String, dynamic>?> getUserByEmail(String email) async {
     final db = await database;
 
     final result = await db.query(
@@ -81,39 +64,32 @@ class DatabaseHelper {
 
     return null;
   }
-  Future<Map<String, dynamic>?> loginUser(
-  String email,
-  String password,
-) async {
-  final db = await database;
 
-  final result = await db.query(
-    'users',
-    where: 'email = ? AND password = ?',
-    whereArgs: [email, password],
-    limit: 1,
-  );
+  Future<Map<String, dynamic>?> loginUser(String email, String password) async {
+    final db = await database;
 
-  if (result.isNotEmpty) {
-    return result.first;
+    final result = await db.query(
+      'users',
+      where: 'email = ? AND password = ?',
+      whereArgs: [email, password],
+      limit: 1,
+    );
+
+    if (result.isNotEmpty) {
+      return result.first;
+    }
+
+    return null;
   }
-
-  return null;
-}
 
   // ======================
   // DEVICES
   // ======================
 
-  Future<int> insertDevice(
-    Map<String, dynamic> device,
-  ) async {
+  Future<int> insertDevice(Map<String, dynamic> device) async {
     final db = await database;
 
-    return await db.insert(
-      'devices',
-      device,
-    );
+    return await db.insert('devices', device);
   }
 
   Future<List<Map<String, dynamic>>> getDevices() async {
@@ -122,38 +98,23 @@ class DatabaseHelper {
     return await db.query('devices');
   }
 
-  Future<int> updateDevice(
-    int id,
-    Map<String, dynamic> device,
-  ) async {
+  Future<int> updateDevice(int id, Map<String, dynamic> device) async {
     final db = await database;
 
-    return await db.update(
-      'devices',
-      device,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    return await db.update('devices', device, where: 'id = ?', whereArgs: [id]);
   }
 
   // ======================
   // SYSTEM CONFIG
   // ======================
 
-  Future<int> insertSystemConfig(
-    Map<String, dynamic> config,
-  ) async {
+  Future<int> insertSystemConfig(Map<String, dynamic> config) async {
     final db = await database;
 
-    return await db.insert(
-      'system_config',
-      config,
-    );
+    return await db.insert('system_config', config);
   }
 
-  Future<Map<String, dynamic>?> getSystemConfig(
-    int deviceId,
-  ) async {
+  Future<Map<String, dynamic>?> getSystemConfig(int deviceId) async {
     final db = await database;
 
     final result = await db.query(
@@ -188,20 +149,13 @@ class DatabaseHelper {
   // SENSOR READINGS
   // ======================
 
-  Future<int> insertSensorReading(
-    Map<String, dynamic> reading,
-  ) async {
+  Future<int> insertSensorReading(Map<String, dynamic> reading) async {
     final db = await database;
 
-    return await db.insert(
-      'sensor_readings',
-      reading,
-    );
+    return await db.insert('sensor_readings', reading);
   }
 
-  Future<List<Map<String, dynamic>>> getSensorReadings(
-    int deviceId,
-  ) async {
+  Future<List<Map<String, dynamic>>> getSensorReadings(int deviceId) async {
     final db = await database;
 
     return await db.query(
@@ -212,9 +166,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getLastFiveReadings(
-    int deviceId,
-  ) async {
+  Future<List<Map<String, dynamic>>> getLastFiveReadings(int deviceId) async {
     final db = await database;
 
     return await db.query(
@@ -230,20 +182,13 @@ class DatabaseHelper {
   // PUMP ACTIVATIONS
   // ======================
 
-  Future<int> insertPumpActivation(
-    Map<String, dynamic> activation,
-  ) async {
+  Future<int> insertPumpActivation(Map<String, dynamic> activation) async {
     final db = await database;
 
-    return await db.insert(
-      'pump_activations',
-      activation,
-    );
+    return await db.insert('pump_activations', activation);
   }
 
-  Future<List<Map<String, dynamic>>> getPumpActivations(
-    int deviceId,
-  ) async {
+  Future<List<Map<String, dynamic>>> getPumpActivations(int deviceId) async {
     final db = await database;
 
     return await db.query(
@@ -272,9 +217,7 @@ class DatabaseHelper {
   // RELATÓRIOS
   // ======================
 
-  Future<double> getAverageMoisture(
-    int deviceId,
-  ) async {
+  Future<double> getAverageMoisture(int deviceId) async {
     final db = await database;
 
     final result = await db.rawQuery(
@@ -289,9 +232,7 @@ class DatabaseHelper {
     return (result.first['avg'] as num?)?.toDouble() ?? 0.0;
   }
 
-  Future<double> getMaxMoisture(
-    int deviceId,
-  ) async {
+  Future<double> getMaxMoisture(int deviceId) async {
     final db = await database;
 
     final result = await db.rawQuery(
@@ -306,9 +247,7 @@ class DatabaseHelper {
     return (result.first['max'] as num?)?.toDouble() ?? 0.0;
   }
 
-  Future<double> getMinMoisture(
-    int deviceId,
-  ) async {
+  Future<double> getMinMoisture(int deviceId) async {
     final db = await database;
 
     final result = await db.rawQuery(
@@ -323,9 +262,7 @@ class DatabaseHelper {
     return (result.first['min'] as num?)?.toDouble() ?? 0.0;
   }
 
-  Future<int> getPumpActivationCount(
-    int deviceId,
-  ) async {
+  Future<int> getPumpActivationCount(int deviceId) async {
     final db = await database;
 
     final result = await db.rawQuery(
@@ -340,9 +277,7 @@ class DatabaseHelper {
     return result.first['total'] as int;
   }
 
-  Future<int> getTotalPumpTime(
-    int deviceId,
-  ) async {
+  Future<int> getTotalPumpTime(int deviceId) async {
     final db = await database;
 
     final result = await db.rawQuery(
@@ -356,5 +291,19 @@ class DatabaseHelper {
 
     return (result.first['total'] as int?) ?? 0;
   }
-}
 
+  Future<List<Map<String, dynamic>>> getSensorReadings() async {
+    final db = await database;
+
+    return await db.query('sensor_readings', orderBy: 'created_at DESC');
+  }
+  Future<List<Map<String, dynamic>>>
+    getPumpActivations() async {
+  final db = await database;
+
+  return await db.query(
+    'pump_activations',
+    orderBy: 'started_at DESC',
+  );
+}
+}
