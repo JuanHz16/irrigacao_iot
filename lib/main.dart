@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'features/control/control_provider.dart';
+import 'features/config/config_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => ConfigProvider()),
 
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProxyProvider<DashboardProvider, ControlProvider>(
