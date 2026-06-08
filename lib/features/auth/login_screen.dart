@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irrigacao_iot/features/navigation/main_navigation_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_provider.dart';
@@ -55,7 +56,7 @@ class _LoginScreenState
         context,
         MaterialPageRoute(
           builder: (_) =>
-              const DashboardScreen(),
+              const MainNavigationScreen(),
         ),
       );
     } else {
