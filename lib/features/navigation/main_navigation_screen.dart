@@ -3,6 +3,7 @@ import '../config/config_screen.dart';
 
 import '../control/control_screen.dart';
 import '../dashboard/dashboard_screen.dart';
+import '../history/history_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,6 +19,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const DashboardScreen(),
     const ControlScreen(),
     const ConfigScreen(),
+    const HistoryScreen(),
   ];
 
   @override
@@ -27,6 +29,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
+
+        type: BottomNavigationBarType.fixed,
+
+        selectedItemColor: Colors.blue,
+
+        unselectedItemColor: Colors.grey,
 
         onTap: (index) {
           setState(() {
@@ -46,6 +54,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
 
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Config'),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'Histórico',
+          ),
         ],
       ),
     );

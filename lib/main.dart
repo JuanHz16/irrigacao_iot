@@ -3,7 +3,7 @@ import 'features/control/control_provider.dart';
 import 'features/config/config_provider.dart';
 
 import 'package:provider/provider.dart';
-
+import 'features/history/history_provider.dart';
 import 'features/auth/auth_provider.dart';
 import 'features/auth/login_screen.dart';
 import 'features/dashboard/dashboard_provider.dart';
@@ -14,6 +14,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ConfigProvider()),
+        ChangeNotifierProvider(create: (_) => HistoryProvider()),
 
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProxyProvider<DashboardProvider, ControlProvider>(
